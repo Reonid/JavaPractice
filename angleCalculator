@@ -1,0 +1,53 @@
+import java.util.*;
+
+public class angleCalculator
+{
+    
+    public static void calculateAngle(double hh, double mm)
+    {
+        double hours = hh;
+        double minutes = mm;
+        
+        if(hours == 12)
+        {
+            hours = 0;
+        }
+        if(minutes == 60)
+        {
+            minutes = 0;
+        }
+        
+        double hourAngle = 0.5 * ( hours*60 + minutes);
+        double minuteAngle = 6 * minutes;
+        
+        double angle = Math.abs(hourAngle - minuteAngle);
+        
+        angle = Math.min( 360 - angle, angle);
+        
+        System.out.println("The angle between the hour and minute hand is: " + angle + " degrees.");
+    }
+    
+    
+	public static void main(String[] args) 
+	{
+		Scanner myInput = new Scanner(System.in);
+		
+		System.out.println("Please enter the number of hours in range 1-12:");
+		
+		double hourHand = myInput.nextDouble();
+		while (hourHand < 0 || hourHand > 12)
+		{
+		    System.out.println("Invalid input! Make sure the number is in range 1 to 12!");
+		    hourHand = myInput.nextDouble();
+		}
+		
+		double minuteHand = myInput.nextDouble();
+		while (minuteHand < 0 || minuteHand > 60)
+		{
+		    System.out.println("Invalid input! Make sure the number is in range 1 to 60!");
+		    minuteHand = myInput.nextDouble();
+		}
+		
+		calculateAngle(hourHand, minuteHand);
+	}
+}
