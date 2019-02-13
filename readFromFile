@@ -1,0 +1,64 @@
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+
+public class readFromFile 
+{
+	public static void main(String[] args) throws Exception
+	{
+		Scanner myScanner = new Scanner( new File("C:\\Users\\Leon\\Desktop\\podaci.txt") );
+		String myData = myScanner.useDelimiter("\\A").next();
+		myScanner.close(); 
+		
+		String myDataArray[]=myData.split(" ");
+    HashMap<String, Integer> uniqueWord = new HashMap<String, Integer>();
+        
+        for (String word : myDataArray)
+        {
+            if (word.length() <= 2)
+            {
+                continue;
+            }
+            
+            Integer existingCount = uniqueWord.get(word);
+            uniqueWord.put(word, (existingCount == null ? 1 : (existingCount + 1)));
+        }
+
+        Set<Entry<String, Integer>> uniqueSet = uniqueWord.entrySet();
+        boolean first = true;
+        
+        for (Entry<String, Integer> entry : uniqueSet)
+        {
+            if (entry.getValue() > 1)
+            {
+                System.out.print("The word: " + (first ? "" : "") + entry.getKey() + " is repeated " + entry.getValue() + " times.\n");
+                first = false;
+            }
+        }
+
+		int[] myNumbers = Arrays.stream(myData.replaceAll("-", " -").split("[^-\\d]+"))
+		                   .filter(s -> !s.matches("-?"))
+		                   .mapToInt(Integer::parseInt).toArray();
+		                   
+		int largest = myNumbers[0];
+		int secondLargest = myNumbers[0];
+		
+		for (int i = 0; i < myNumbers.length; i++) 
+		{
+			if (myNumbers[i] > largest) 
+			{
+				secondLargest = largest;
+				largest = myNumbers[i];
+ 
+			} 
+      else if (myNumbers[i] > secondLargest) 
+			{
+				secondLargest = myNumbers[i];
+			}
+		}
+		
+		System.out.println("The largest number is: " + largest);
+		System.out.println("The second largest number is: " + secondLargest);
+		
+	}
+}
