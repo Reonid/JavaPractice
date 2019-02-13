@@ -1,0 +1,32 @@
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class getDataFromURL 
+{
+    public static void main(String[] args) throws Exception 
+    {
+    	String urlParameters = "param1=a&param2=b&param3=c";
+    	URL myUrl = new URL("http://httpbin.org/post");
+    	URLConnection myConnection = myUrl.openConnection();
+
+    	myConnection.setDoOutput(true);
+
+    	OutputStreamWriter myWriter = new OutputStreamWriter(myConnection.getOutputStream());
+
+    	myWriter.write(urlParameters);
+    	myWriter.flush();
+
+    	String line;
+    	
+    	BufferedReader myReader = new BufferedReader(new InputStreamReader(myConnection.getInputStream()));
+
+    	while ((line = myReader.readLine()) != null) 
+    	{
+    	    System.out.println(line);
+    	}
+      
+    	myWriter.close();
+    	myReader.close(); 
+    }
+}
